@@ -57,13 +57,16 @@ def main(args):
         config = TrainConfig() 
     else:
         config = TestConfig()
+    
+    if args.model_name is not None:
+        config.model_name = args.model_name
 
     if config.model_name == "meta-llama/Llama-2-7b-hf":
-        base_model = Llama2Classifier
+        Model = Llama2Classifier
         config.batch_size_training = 4
         config.micro_batch_size = 4
     elif config.model_name == "bert-base-uncased":
-        base_model = BERTClassifier
+        Model = BERTClassifier
         config.batch_size_training = 32
         config.micro_batch_size = 32
     
@@ -76,9 +79,8 @@ def main(args):
         config.batch_size_training *= 2
         config.micro_batch_size *= 2
 
-    if args.lora:
-        config.checkpoint_folder = f"{config.checkpoint_folder}_lora"
-
+    # if args.lora:
+    #     config.checkpoint_folder = f"{config.checkpoint_folder}_lora"
 
     torch.cuda.manual_seed(config.seed)
     torch.manual_seed(config.seed)
@@ -123,29 +125,13 @@ def main(args):
     
     if args.run_mode == "train":
         if args.quantize_for_lora:
-            model = base_model(class_num=config.class_num, max_length=config.max_length, quantize_for_lora=args.quantize_for_lora)
+            model = Model(class_num=config.class_num, max_length=config.max_length, quantize_for_lora=args.quantize_for_lora)
         else:
-            model = base_model(class_num=config.class_num, max_length=config.max_length)
+            model = Model(class_num=config.class_num, max_length=config.max_length)
         model.model.resize_token_embeddings(len(tokenizer))
         
         if args.load_full_ckpt:
-            full_state_dict = torch.load(os.path.join(checkpoint_dir, "model.pt"))
-            try:
-                model.load_state_dict(full_state_dict)
-            except:
-                revised_state_dict = dict()
-                for k,v in full_state_dict.items():
-                    revised_state_dict[k.split("model.base_model.")[1]] = v
-                model.load_state_dict(revised_state_dict)
-
-        if args.quantize:
-            model = torch.quantization.quantize_dynamic(model, {torch.nn.Linear}, dtype=torch.qint8)
-            print("Using Quantized Model")
-        
-        if args.quantize_for_lora:
-            model.model.gradient_checkpointing_enable()
-            model = prepare_model_for_kbit_training(model)
-            print("Using Quantized Model for LoRA")
+            model.load_state_dict(torch.load(os.path.join(checkpoint_dir, "model.pt")))
 
         if args.lora:
             if config.model_name == "meta-llama/Llama-2-7b-hf":
@@ -158,8 +144,25 @@ def main(args):
                                         target_modules=['query', 'key', 'value', 'dense'])
             else:
                 raise Exception("LoRA Config for the given model is not defined yet!")
-            model = get_peft_model(model, lora_config)
-            
+            model.model = get_peft_model(model.model, lora_config)
+            # if args.load_full_ckpt:
+            #     model.load_state_dict(torch.load(os.path.join(checkpoint_dir, "model.pt")))
+
+            if args.load_full_ckpt:
+                if config.model_name == "meta-llama/Llama-2-7b-hf":
+                    model.model.score.original_module.load_state_dict(torch.load(os.path.join(checkpoint_dir, "score.original_module.pt")))
+                elif config.model_name == "bert-base-uncased":
+                    model.model.classifier.original_module.load_state_dict(torch.load(os.path.join(checkpoint_dir, "classifier.original_module.pt")))
+
+        if args.quantize_for_lora:
+            model.model.gradient_checkpointing_enable()
+            model = prepare_model_for_kbit_training(model)
+            print("Using Quantized Model for LoRA")
+
+        if args.quantize:
+            model = torch.quantization.quantize_dynamic(model, {torch.nn.Linear}, dtype=torch.qint8)
+            print("Using Quantized Model")
+
         if not args.cpu:
             model.cuda()
         print_size_of_model(model)
@@ -168,7 +171,8 @@ def main(args):
         optimizer = optim.AdamW(model.parameters(), lr=config.lr, weight_decay=0.0)
         scheduler = StepLR(optimizer, step_size=1, gamma=config.gamma)
 
-        model.model.gradient_checkpointing_enable()
+        if args.lora:
+            config.checkpoint_folder = f"{config.checkpoint_folder}_lora"
         if args.quantize:
             config.checkpoint_folder = f"{config.checkpoint_folder}_quant"
         if args.quantize_for_lora:
@@ -187,18 +191,10 @@ def main(args):
         )
     else:
         if args.quantize_for_lora:
-            model = base_model(class_num=config.class_num, max_length=config.max_length, quantize_for_lora=args.quantize_for_lora)
+            model = Model(class_num=config.class_num, max_length=config.max_length, quantize_for_lora=args.quantize_for_lora)
         else:
-            model = base_model(class_num=config.class_num, max_length=config.max_length) 
-        model.model.resize_token_embeddings(len(tokenizer))
-
-        if args.quantize:
-            model = torch.quantization.quantize_dynamic(model, {torch.nn.Linear}, dtype=torch.qint8)
-            print("Using Quantized Model")
-            
-        if args.quantize_for_lora:
-            model = prepare_model_for_kbit_training(model)
-            print("Using Quantized Model for LoRA")       
+            model = Model(class_num=config.class_num, max_length=config.max_length) 
+        model.model.resize_token_embeddings(len(tokenizer)) 
 
         if args.lora:
             if config.model_name == "meta-llama/Llama-2-7b-hf":
@@ -211,8 +207,22 @@ def main(args):
                                         target_modules=['query', 'key', 'value', 'dense'])
             else:
                 raise Exception("LoRA Config for the given model is not defined yet!")
-            model = get_peft_model(model, lora_config)
+            model.model = get_peft_model(model.model, lora_config)
         
+        print("After LoRA")
+        for name, param in model.named_parameters():
+            print(f"{name}: {param}, {param.shape}")
+
+        if args.quantize_for_lora:
+            model = prepare_model_for_kbit_training(model)
+            print("Using Quantized Model for LoRA")      
+
+        if args.quantize:
+            model = torch.quantization.quantize_dynamic(model, {torch.nn.Linear}, dtype=torch.qint8)
+            print("Using Quantized Model")
+        
+        if args.lora:
+            config.checkpoint_folder = f"{config.checkpoint_folder}_lora"
         if args.quantize:
             config.checkpoint_folder = f"{config.checkpoint_folder}_quant"
         if args.quantize_for_lora:
@@ -220,11 +230,12 @@ def main(args):
         checkpoint_dir = get_checkpoint_save_dir(config)
         
         model.load_state_dict(torch.load(os.path.join(checkpoint_dir, "model.pt")))
+
         if args.lora:
             if config.model_name == "meta-llama/Llama-2-7b-hf":
-                model.score.original_module.load_state_dict(torch.load(os.path.join(checkpoint_dir, "score.original_module.pt")))
+                model.model.score.original_module.load_state_dict(torch.load(os.path.join(checkpoint_dir, "score.original_module.pt")))
             elif config.model_name == "bert-base-uncased":
-                model.classifier.original_module.load_state_dict(torch.load(os.path.join(checkpoint_dir, "classifier.original_module.pt")))
+                model.model.classifier.original_module.load_state_dict(torch.load(os.path.join(checkpoint_dir, "classifier.original_module.pt")))
 
         if not args.cpu:
             model = model.cuda()
@@ -243,5 +254,6 @@ if __name__ == "__main__":
     parser.add_argument("--cpu", type=bool, default=False)
     parser.add_argument("--lora", type=bool, default=False)
     parser.add_argument("--load_full_ckpt", type=bool, default=False)
+    parser.add_argument("--model_name", type=str, default=None)
     args = parser.parse_args() 
     main(args)
