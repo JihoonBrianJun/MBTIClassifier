@@ -113,7 +113,6 @@ if __name__ == "__main__":
     parser.add_argument("--quantize_for_lora", type=bool, default=False)
     parser.add_argument("--cpu", type=bool, default=False)
     parser.add_argument("--lora", type=bool, default=False)
-    parser.add_argument("--load_full_ckpt", type=bool, default=False)
     parser.add_argument("--input", type=str, default=None)
     args = parser.parse_args() 
     main(args)
