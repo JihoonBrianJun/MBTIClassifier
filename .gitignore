@@ -3,3 +3,4 @@ dataset/MBTI 500_train.csv
 dataset/MBTI 500_eval.csv
 model_checkpoints/*
 model_checkpoints_best/*
+*.ptl
