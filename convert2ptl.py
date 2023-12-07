@@ -27,7 +27,12 @@ def main(args):
 
     traced_model = torch.jit.trace(model, dummy_input)
     optimized_model = optimize_for_mobile(traced_model)
-    optimized_model._save_for_lite_interpreter("bertMBTIClassifier.ptl")
+    
+    save_dir = f"save/{args.model_name}"
+    if not os.path.exists(save_dir):
+        os.makedirs(save_dir)
+    optimized_model._save_for_lite_interpreter(os.path.join(save_dir, "bertMBTIClassifier.ptl"))
+    tokenizer.save_vocabulary(save_dir)
 
 if __name__ == "__main__":
     parser = ArgumentParser()
