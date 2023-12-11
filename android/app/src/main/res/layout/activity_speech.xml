@@ -86,54 +86,54 @@
         android:text="START"
         android:textSize="20sp" />
 
-<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content">-->
+    <!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content">-->
 
-<!--        <TextView-->
-<!--            android:id="@+id/instructionText1"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent"-->
-<!--            app:layout_constraintVertical_bias="0.5"-->
-<!--            app:layout_constraintRight_toLeftOf="@+id/recordButton"-->
-<!--            android:text="Press to"-->
-<!--            android:textColor="#FF0000"-->
-<!--            android:textSize="18sp"-->
-<!--            android:textStyle="bold" />-->
+    <!--        <TextView-->
+    <!--            android:id="@+id/instructionText1"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--            app:layout_constraintTop_toTopOf="parent"-->
+    <!--            app:layout_constraintVertical_bias="0.5"-->
+    <!--            app:layout_constraintRight_toLeftOf="@+id/recordButton"-->
+    <!--            android:text="Press to"-->
+    <!--            android:textColor="#FF0000"-->
+    <!--            android:textSize="18sp"-->
+    <!--            android:textStyle="bold" />-->
 
-<!--        <ImageButton-->
-<!--            android:id="@+id/recordButton"-->
-<!--            app:srcCompat="@android:drawable/presence_audio_busy"-->
-<!--            android:backgroundTint="@color/white"-->
-<!--            android:layout_width="80dp"-->
-<!--            android:layout_height="80dp"-->
-<!--            android:scaleType="fitCenter"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintHorizontal_bias="0.5"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent"-->
-<!--            app:layout_constraintVertical_bias="0.5"-->
-<!--            tools:ignore="SpeakableTextPresentCheck"/>-->
+    <!--        <ImageButton-->
+    <!--            android:id="@+id/recordButton"-->
+    <!--            app:srcCompat="@android:drawable/presence_audio_busy"-->
+    <!--            android:backgroundTint="@color/white"-->
+    <!--            android:layout_width="80dp"-->
+    <!--            android:layout_height="80dp"-->
+    <!--            android:scaleType="fitCenter"-->
+    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            app:layout_constraintHorizontal_bias="0.5"-->
+    <!--            app:layout_constraintStart_toStartOf="parent"-->
+    <!--            app:layout_constraintTop_toTopOf="parent"-->
+    <!--            app:layout_constraintVertical_bias="0.5"-->
+    <!--            tools:ignore="SpeakableTextPresentCheck"/>-->
 
 
 
-<!--        <TextView-->
-<!--            android:id="@+id/instructionText2"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent"-->
-<!--            app:layout_constraintVertical_bias="0.5"-->
-<!--            app:layout_constraintLeft_toRightOf="@+id/recordButton"-->
-<!--            android:text="Speak"-->
-<!--            android:textColor="#FF0000"-->
-<!--            android:textSize="18sp"-->
-<!--            android:textStyle="bold"/>-->
+    <!--        <TextView-->
+    <!--            android:id="@+id/instructionText2"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--            app:layout_constraintTop_toTopOf="parent"-->
+    <!--            app:layout_constraintVertical_bias="0.5"-->
+    <!--            app:layout_constraintLeft_toRightOf="@+id/recordButton"-->
+    <!--            android:text="Speak"-->
+    <!--            android:textColor="#FF0000"-->
+    <!--            android:textSize="18sp"-->
+    <!--            android:textStyle="bold"/>-->
 
-<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+    <!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
 
 
     <LinearLayout

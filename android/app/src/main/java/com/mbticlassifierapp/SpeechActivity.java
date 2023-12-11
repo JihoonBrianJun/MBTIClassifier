@@ -1,4 +1,4 @@
-package com.mbtidetection;
+package com.mbticlassifierapp;
 
 import android.Manifest;
 import android.content.Context;
@@ -44,7 +44,6 @@ import org.pytorch.IValue;
 import org.pytorch.Module;
 import org.pytorch.Tensor;
 import org.pytorch.LiteModuleLoader;
-
 
 public class SpeechActivity extends AppCompatActivity {
     String TAG = "SpeechPage";
@@ -124,7 +123,10 @@ public class SpeechActivity extends AppCompatActivity {
                     recordActive.setAlpha((float) 0);
 
                     endAudioCapture();
+                    Log.i(TAG, "Speech Text: "+speechText.getText().toString());
                     classifyMBTI(speechText.getText().toString());
+                    speechText.setText("");
+                    captureText = "";
                 }
             }
         });
@@ -275,30 +277,29 @@ public class SpeechActivity extends AppCompatActivity {
                 ArrayList<String> captureResult = bundle.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
                 String originText = speechText.getText().toString();
 
-                String resultText="";
                 for (int i = 0; i < captureResult.size() ; i++) {
-                    resultText += captureResult.get(i);
+                    captureText += captureResult.get(i);
                 }
-                speechText.setText(originText+" " + resultText);
+                speechText.setText(originText+" " + captureText);
 
 //                confidenceText.setText(captureText);
-//                resultText.setText(classifyMBTI(captureText));
+//                classifyMBTI(captureText);
                 speechRecognizer.startListening(intent);
             }
 
             @Override
             public void onPartialResults(Bundle partialResults) {
-                ArrayList<String> captureResult = partialResults.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
-                String originText = speechText.getText().toString();
-                String resultText="";
-                for (int i = 0; i < captureResult.size() ; i++) {
-                    resultText += captureResult.get(i);
-                }
-
-//                confidenceText.setText(captureText);
-//                resultText.setText(classifyMBTI(captureText));
-                speechText.setText(originText+" " + resultText);
-                speechRecognizer.startListening(intent);
+//                ArrayList<String> captureResult = partialResults.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
+//                String originText = speechText.getText().toString();
+//                String resultText="";
+//                for (int i = 0; i < captureResult.size() ; i++) {
+//                    resultText += captureResult.get(i);
+//                }
+//
+////                confidenceText.setText(captureText);
+////                resultText.setText(classifyMBTI(captureText));
+//                speechText.setText(originText+" " + resultText);
+//                speechRecognizer.startListening(intent);
 
             }
 
@@ -446,4 +447,3 @@ public class SpeechActivity extends AppCompatActivity {
     }
 
 }
-

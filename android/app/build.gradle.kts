@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "com.mbtidetection"
+    namespace = "com.mbticlassifierapp"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.mbtidetection"
+        applicationId = "com.mbticlassifierapp"
         minSdk = 26
         targetSdk = 33
         versionCode = 1

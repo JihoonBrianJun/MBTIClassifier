@@ -1,4 +1,4 @@
-package com.mbtidetection;
+package com.mbticlassifierapp;
 
 import org.junit.Test;
 

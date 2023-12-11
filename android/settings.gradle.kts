@@ -15,6 +15,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "MBTIDetection"
+rootProject.name = "MBTIClassifierApp"
 include(":app")
  
