@@ -20,8 +20,8 @@ def test(model, eval_dataloader):
     for step, batch in enumerate(tqdm(eval_dataloader,colour="green", desc="Testing Epoch")):
         with torch.no_grad():
             model_device = next(model.parameters()).device
-            model_output = model(input_ids=batch["input_ids"].to(model_device)).cpu()
-            model_answer_idx = torch.argmax(model_output, dim=2).numpy()[0]
+            model_output = model(input_ids=batch["input_ids"].to(model_device)).cpu()[0]
+            model_answer_idx = torch.argmax(model_output, dim=1).numpy()
             model_answer = class_names[sum([(2**(3-idx))*digit for idx, digit in enumerate(model_answer_idx)])]
             
             gold_answer = batch["gold_answers"][0]
@@ -37,7 +37,7 @@ def test(model, eval_dataloader):
                 correct_match += match_score / len(gold_answer)
             
             print(f"Model Answer: {model_answer}, Gold Answer: {gold_answer}")
-            print(f"I/E: {model_answer_idx[0]}\nN/S: {model_answer_idx[1]}\nT/F: {model_answer_idx[2]}\nJ/P: {model_answer_idx[3]}")
+            print(f"I/E: {model_output[0]}\nN/S: {model_output[1]}\nT/F: {model_output[2]}\nJ/P: {model_output[3]}")
             
             results.append(model_answer)
             

@@ -65,51 +65,8 @@ def main(args):
 
     
     if args.input == None:
-        args.input = """I always felt like an outsider even
-
-though I was able to
-
-pass kind of as a normal person tell
-
-ourselves stories we edit and delete we
-
-choose what to think about what to pay
-
-attention to we make up a story to make
-
-sense of what's going on
-
-and we all get it wrong
-
-because we're all trying to navigate
-
-with our own skewed compasses and we all
-
-have our own baggage but the stories
-
-themselves are utterly convincing if I
-
-can crack
-
-the code in the sense that I find
-
-something that saves people hundreds of
-
-hours or myself hundreds of hours in the
-
-learning curve for a particular skill or
-
-a particular type of recovery
-
-or fill in the blank
-
-Just An Elegant or non-obvious solution
-
-to a long-standing problem I'm like oh
-
-[Music]
-
-"""
+        args.input = """
+        """
                 
     if args.instruction:
         instruction = """## Instruction: Classify the [MBTI] of the given [Text].
