@@ -61,8 +61,8 @@ def main(args):
         config.model_name = args.model_name
 
     Model = BERTClassifierQudra
-    config.batch_size_training = 4
-    config.micro_batch_size = 4
+    config.batch_size_training = 8
+    config.micro_batch_size = 8
     
     config.class_num = 2
     config.checkpoint_folder = f"{config.checkpoint_folder}_qudra"
@@ -214,8 +214,6 @@ def main(args):
                 model.classifiers[i] = get_peft_model(model.classifiers[i], lora_config)
         
         print("After LoRA")
-        for name, param in model.named_parameters():
-            print(f"{name}: {param}, {param.shape}")
 
         if args.quantize_for_lora:
             model = prepare_model_for_kbit_training(model)

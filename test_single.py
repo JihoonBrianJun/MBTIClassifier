@@ -49,6 +49,8 @@ def main(args):
 
     if args.balance:
         args.checkpoint_dir = f"{args.checkpoint_dir}_bal"
+    if args.proportional:
+        args.checkpoint_dir = f"{args.checkpoint_dir}_prop"
     if args.quantize:
         args.checkpoint_dir = f"{args.checkpoint_dir}_quant"
     if args.quantize_for_lora:
@@ -153,6 +155,7 @@ if __name__ == "__main__":
     parser.add_argument("--max_length", type=int, default=512)
     parser.add_argument("--class_num", type=int, default=16)
     parser.add_argument("--balance", type=bool, default=False)
+    parser.add_argument("--proportional", type=bool, default=False)
     parser.add_argument("--instruction", type=bool, default=False)
     parser.add_argument("--quantize", type=bool, default=False)
     parser.add_argument("--quantize_for_lora", type=bool, default=False)

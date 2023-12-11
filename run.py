@@ -73,7 +73,11 @@ def main(args):
     if args.balance:
         config.train_data_path= "dataset/MBTI 500_train_bal.csv"
         config.eval_data_path= "dataset/MBTI 500_eval_bal.csv"
-        config.checkpoint_folder = "MBTI500_bal"
+        config.checkpoint_folder = f"{config.checkpoint_folder}_bal"
+    if args.proportional:
+        config.train_data_path= "dataset/MBTI 500_train_prop.csv"
+        config.eval_data_path= "dataset/MBTI 500_eval_prop.csv"
+        config.checkpoint_folder = f"{config.checkpoint_folder}_prop"
     
     if not args.instruction:
         config.batch_size_training *= 2
@@ -210,8 +214,6 @@ def main(args):
             model.model = get_peft_model(model.model, lora_config)
         
         print("After LoRA")
-        for name, param in model.named_parameters():
-            print(f"{name}: {param}, {param.shape}")
 
         if args.quantize_for_lora:
             model = prepare_model_for_kbit_training(model)
@@ -249,6 +251,7 @@ if __name__ == "__main__":
     parser.add_argument("--run_mode", type=str, choices=["train", "eval"], default="train")
     parser.add_argument("--instruction", type=bool, default=False)
     parser.add_argument("--balance", type=bool, default=False)
+    parser.add_argument("--proportional", type=bool, default=False)
     parser.add_argument("--quantize", type=bool, default=False)
     parser.add_argument("--quantize_for_lora", type=bool, default=False)
     parser.add_argument("--cpu", type=bool, default=False)
