@@ -15,9 +15,9 @@ from transformers import AutoConfig, AutoTokenizer, AutoModelForCausalLM, GPT2Mo
 
 from configs.train_config import TrainConfig
 from configs.test_config import TestConfig
-from utils.dataset_utils import DatasetGenerator, DataCollator
-from utils.train_utils import train
-from utils.test_utils import test
+from utils.dataset_utils_generation import DatasetGenerator, DataCollator
+from utils.train_utils_generation import train
+from utils.test_utils_generation import test
 
 from model.gpt2classifier import GPT2Classifier
 
