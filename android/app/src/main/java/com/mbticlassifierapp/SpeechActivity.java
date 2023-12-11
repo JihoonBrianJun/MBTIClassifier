@@ -124,7 +124,7 @@ public class SpeechActivity extends AppCompatActivity {
 
                     endAudioCapture();
                     Log.i(TAG, "Speech Text: "+speechText.getText().toString());
-                    classifyMBTI(speechText.getText().toString());
+//                    classifyMBTI(speechText.getText().toString());
                     speechText.setText("");
                     captureText = "";
                 }
@@ -283,7 +283,7 @@ public class SpeechActivity extends AppCompatActivity {
                 speechText.setText(originText+" " + captureText);
 
 //                confidenceText.setText(captureText);
-//                classifyMBTI(captureText);
+                classifyMBTI(captureText);
                 speechRecognizer.startListening(intent);
             }
 
