@@ -3,6 +3,7 @@ This repository contains the materials developed for the final project of SNU 20
 
 Source Code for Android App is within the directory "android/"
 
-apk file for the Android App is named as "MBTIClassifierApp.apk"
-
 All other files and directories are the materials for Model Training & Optimization.
+
+apj file for this Android App can be downloaded from the following link:
+https://drive.google.com/file/d/1yKxh5s7eU9V9JuWM2W-mZFLmv0pvL7Vh/view?usp=sharing
