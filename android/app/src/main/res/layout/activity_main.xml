@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:weightSum="40">
+
+    <TextView
+        android:id="@+id/textView1_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:text="Mobile Computing and Its Applications"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:textColor="#3F51B5"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView1_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:text="Final Project"
+        android:textAlignment="center"
+        android:textSize="32sp"
+        android:textColor="#3F51B5"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView1_4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="5"
+        android:gravity="center"
+        android:text=""
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:textColor="#3F51B5"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/Inertial_Button"
+        style="@style/Widget.Material3.Button.UnelevatedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:backgroundTint="#3949AB"
+        android:gravity="center"
+        android:onClick="onStartSpeechActivity"
+        android:text="Speech Recognition"
+        android:textSize="20sp" />
+
+    <!--    <Button-->
+    <!--        android:id="@+id/Camera_Button"-->
+    <!--        style="@style/Widget.Material3.Button.UnelevatedButton"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_weight="3"-->
+    <!--        android:backgroundTint="#3949AB"-->
+    <!--        android:gravity="center"-->
+    <!--        android:onClick="onStartCameraActivity"-->
+    <!--        android:text="Camera"-->
+    <!--        android:textSize="20sp" />-->
+
+    <TextView
+        android:id="@+id/textView1_5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="5"
+        android:gravity="center"
+        android:text=""
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:textColor="#3F51B5"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView1_6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:text="2018-16135 전지훈"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:textColor="#3F51B5"
+        android:textStyle="bold" />
+
+
+</LinearLayout>
